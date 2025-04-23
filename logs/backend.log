@@ -28,3 +28,17 @@
 23.4.2025, 19:31:21 - DEBUG - req.query | {"title":"momo","description":"Bug description","severity":"50"}
 23.4.2025, 19:31:21 - INFO - Server listening on port http://127.0.0.1:3030/
 23.4.2025, 19:32:28 - INFO - Server listening on port http://127.0.0.1:3030/
+23.4.2025, 19:36:10 - INFO - Server listening on port http://127.0.0.1:3030/
+23.4.2025, 19:36:34 - DEBUG - req.query | {"title":"Bug 1745426191269","description":"Bug description","severity":"3"}
+23.4.2025, 19:36:35 - INFO - Server listening on port http://127.0.0.1:3030/
+23.4.2025, 19:41:21 - INFO - Server listening on port http://127.0.0.1:3030/
+23.4.2025, 19:44:33 - INFO - Server listening on port http://127.0.0.1:3030/
+23.4.2025, 19:44:46 - INFO - Server listening on port http://127.0.0.1:3030/
+23.4.2025, 19:46:12 - INFO - Server listening on port http://127.0.0.1:3030/
+23.4.2025, 19:47:21 - INFO - Server listening on port http://127.0.0.1:3030/
+23.4.2025, 19:54:39 - INFO - Server listening on port http://127.0.0.1:3030/
+23.4.2025, 19:55:21 - INFO - Server listening on port http://127.0.0.1:3030/
+23.4.2025, 19:55:21 - INFO - Server listening on port http://127.0.0.1:3030/
+23.4.2025, 19:55:31 - INFO - Server listening on port http://127.0.0.1:3030/
+23.4.2025, 19:55:34 - INFO - Server listening on port http://127.0.0.1:3030/
+23.4.2025, 19:57:28 - INFO - Server listening on port http://127.0.0.1:3030/

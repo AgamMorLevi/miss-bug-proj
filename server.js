@@ -21,9 +21,8 @@ app.get('/nono', (req, res) => res.redirect('/'))
 
 
 
-//Provide an API for Bugs CRUDL: Implement one by one along with a bugService
-
-//TODO: List of bugs
+//DONE: Provide an API for Bugs CRUDL: Implement one by one along with a bugService
+//DONE: List of bugs
 //* Read
 app.get('/api/bug', (req, res) => {
    bugService.query()
@@ -35,7 +34,7 @@ app.get('/api/bug', (req, res) => {
 
 }) 
 
-//TODO: Set Defult value
+//DOME: Set Defult value
 //Save
 app.get('/api/bug/save', (req, res) => {
 
@@ -58,9 +57,16 @@ app.get('/api/bug/save', (req, res) => {
     })
 })
 
-//TODO:erfactor Err
+//DONE:refactor Err
+//READ :get by id
 app.get('/api/bug/:bugId', (req, res) => {
     const { bugId } = req.params
+    const { visitCountMap =[] } = req.cookies
+
+    if (visitCountMap.length >= 3) return res.status(400).send('Wait for 10 sec') //the msg will show at the network
+    if (!visitCountMap.includes(bugId)) visitCountMap.push(bugId)   
+
+    res.cookie('visitCountMap', visitCountMap, { maxAge: 1000 * 10 }) // after 10 sec it will remove from the browser
     bugService.getById(bugId)
         .then(bug => res.send(bug))
         .catch(err => {

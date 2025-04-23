@@ -1,5 +1,12 @@
 [
   {
+    "_id": "VleVa",
+    "title": "Bug 1745426191269",
+    "description": "Bug description",
+    "severity": 3,
+    "createdAt": 1745426194998
+  },
+  {
     "_id": "Yd8Iw",
     "title": "momo",
     "description": "Bug description",

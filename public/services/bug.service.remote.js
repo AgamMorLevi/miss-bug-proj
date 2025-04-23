@@ -1,3 +1,5 @@
+import { jsPDF } from 'jspdf'           
+
 const BASE_URL = '/api/bug/'
 
 export const bugService = {
@@ -5,7 +7,9 @@ export const bugService = {
     getById,
     save,
     remove,
-    getDefaultFilter
+    getDefaultFilter,
+    downloadPDF
+
 }
 
 function query(filterBy) {
@@ -49,3 +53,19 @@ function save(bug) {
 function getDefaultFilter() {
     return { txt: '', minSeverity: 0 }
 }
+
+
+function downloadPDF() {
+    fetch('/api/bug/pdf')  
+        .then(response => response.blob())  
+        .then(blob => {
+            const url = window.URL.createObjectURL(blob)
+            const link = document.createElement('a')
+            link.href = url;
+            link.download = 'bugs.pdf'
+            document.body.appendChild(link)
+            link.click()
+            document.body.removeChild(link)
+        })
+        .catch(err => console.error('Error downloading PDF:', err))
+  }

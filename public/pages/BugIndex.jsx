@@ -68,6 +68,8 @@ export function BugIndex() {
         <header>
             <h3>Bug List</h3>
             <button onClick={onAddBug}>Add Bug</button>
+            <button onClick={() => bugService.downloadPDF}>Download PDF</button>
+
         </header>
         
         <BugList 

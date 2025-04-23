@@ -1,3 +1,4 @@
+import fs from 'fs'
 import express from 'express' 
 import cookieParser from 'cookie-parser'
 
@@ -89,6 +90,16 @@ app.get('/api/bug/:bugId/remove', (req, res) => {
 }) 
 
 //TODO:Make the option for PDF
+app.get('/api/bug/pdf', (req, res) => {
+    bugService.query() // Query the bugs from the database or file
+        .then(bugs => {
+            pdfService.buildBugsPDF(bugs, res); // Generate and send PDF to client
+        })
+        .catch(err => {
+            loggerService.error('Cannot generate PDF', err)
+            res.status(500).send('Cannot create PDF')
+        })
+})
 
 const port = 3030
 

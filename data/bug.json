@@ -1,5 +1,19 @@
 [
   {
+    "_id": "FbWUF",
+    "title": "null",
+    "description": "Bug description",
+    "severity": 0,
+    "createdAt": 1745435640232
+  },
+  {
+    "_id": "Bp28b",
+    "title": "Bug 1745427644752",
+    "description": "Bug description",
+    "severity": 3,
+    "createdAt": 1745427648906
+  },
+  {
     "_id": "VleVa",
     "title": "Bug 1745426191269",
     "description": "Bug description",

@@ -2,3 +2,29 @@
 23.4.2025, 18:13:59 - INFO - Server listening on port http://127.0.0.1:3030/
 23.4.2025, 18:14:21 - INFO - Server listening on port http://127.0.0.1:3030/
 23.4.2025, 18:16:21 - INFO - Server listening on port http://127.0.0.1:3030/
+23.4.2025, 19:06:29 - DEBUG - req.query | {}
+23.4.2025, 19:15:11 - INFO - Server listening on port http://127.0.0.1:3030/
+23.4.2025, 19:15:37 - INFO - Server listening on port http://127.0.0.1:3030/
+23.4.2025, 19:16:03 - INFO - Server listening on port http://127.0.0.1:3030/
+23.4.2025, 19:16:27 - INFO - Server listening on port http://127.0.0.1:3030/
+23.4.2025, 19:16:46 - INFO - Server listening on port http://127.0.0.1:3030/
+23.4.2025, 19:17:39 - INFO - Server listening on port http://127.0.0.1:3030/
+23.4.2025, 19:17:44 - INFO - Server listening on port http://127.0.0.1:3030/
+23.4.2025, 19:23:15 - INFO - Server listening on port http://127.0.0.1:3030/
+23.4.2025, 19:24:03 - INFO - Server listening on port http://127.0.0.1:3030/
+23.4.2025, 19:24:51 - INFO - Server listening on port http://127.0.0.1:3030/
+23.4.2025, 19:24:59 - INFO - Server listening on port http://127.0.0.1:3030/
+23.4.2025, 19:25:37 - INFO - Server listening on port http://127.0.0.1:3030/
+23.4.2025, 19:25:45 - INFO - Server listening on port http://127.0.0.1:3030/
+23.4.2025, 19:25:53 - INFO - Server listening on port http://127.0.0.1:3030/
+23.4.2025, 19:26:02 - INFO - Server listening on port http://127.0.0.1:3030/
+23.4.2025, 19:28:21 - INFO - Server listening on port http://127.0.0.1:3030/
+23.4.2025, 19:29:19 - INFO - Server listening on port http://127.0.0.1:3030/
+23.4.2025, 19:30:39 - INFO - Server listening on port http://127.0.0.1:3030/
+23.4.2025, 19:31:04 - DEBUG - req.query | {"title":"test","description":"Bug description","severity":"10"}
+23.4.2025, 19:31:05 - INFO - Server listening on port http://127.0.0.1:3030/
+23.4.2025, 19:31:11 - DEBUG - req.query | {"title":"ss","description":"Bug description","severity":"2"}
+23.4.2025, 19:31:12 - INFO - Server listening on port http://127.0.0.1:3030/
+23.4.2025, 19:31:21 - DEBUG - req.query | {"title":"momo","description":"Bug description","severity":"50"}
+23.4.2025, 19:31:21 - INFO - Server listening on port http://127.0.0.1:3030/
+23.4.2025, 19:32:28 - INFO - Server listening on port http://127.0.0.1:3030/

@@ -1,4 +1,5 @@
 import { jsPDF } from 'jspdf'           
+import { page } from 'pdfkit'
 
 const BASE_URL = '/api/bug/'
 
@@ -12,8 +13,8 @@ export const bugService = {
 
 }
 
-function query(filterBy) {
-    return axios.get(BASE_URL)
+function query(filterBy={}) {
+    return axios.get(BASE_URL,{ params: filterBy })
     .then (res => res.data)
     .then(bugs => {
 
@@ -64,7 +65,7 @@ function save(bug) {
 
 
 function getDefaultFilter() {
-    return { txt: '', minSeverity: 0 }
+    return { txt: '', minSeverity: 0 , pageIdx: 0 }
 }
 
 function downloadPDF() {

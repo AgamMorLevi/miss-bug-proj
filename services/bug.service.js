@@ -8,8 +8,7 @@ export const bugService = {
     getById,
     remove,
     save
-    // _makeId,
-    // _saveBugsToFile,
+
 }
 
 const bugs = utilService.readJsonFile('data/bug.json')
@@ -20,20 +19,18 @@ function query() {
 
 function getById(bugId) {
     const bug = bugs.find(bug => bug._id === bugId)
-    // pdfService.buildAnimalsPDF(bugs) //pdf bonus
+    // pdfService.buildBugsPDF(bugs) //pdf bonus
     if (!bug) return Promise.reject('Bug not found!')
     return Promise.resolve(bug)
 }
 
 function remove(bugId) {
-    // bugs = bugs.filter(bug => bug._id !== bugId)
     const idx = bugs.findIndex(bug => bug._id === bugId)
     bugs.splice(idx, 1)
     return _saveBugsToFile()
 }
 
 function save(bug) {
-    console.log('bug: ', bug)
     if (bug._id) {
         const idx = bugs.findIndex(currBug => currBug._id === bug._id)
         bugs[idx] = { ...bugs[idx], ...bug }
@@ -53,35 +50,9 @@ function _saveBugsToFile() {
                 loggerService.error('Cannot write to bugs file', err)
                 return reject(err);
             }
-            console.log('The file was saved!');
+            console.log('The file was saved!')
             resolve()
         });
     })
 }
 
-// //DONE: rendom id
-
-// function _makeId(langth = 6) {
-//     var id = ''
-//     var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
-//     for (var i = 0; i < langth; i++) {
-//         id += possible.charAt(Math.floor(Math.random() * possible.length))
-//     }
-//     return id
-
-// }
-
-// //DONE: save bug to file
-// function _saveBugsToFile() {
-//     return new Promise((resolve, reject) => {
-//         const data = JSON.stringify(bugs, null, 2)
-//         fs.writeFile('data/bug.json', data, (err) => {
-//             if (err) {
-//                 loggerService.error('Cannot write to bugs file', err)
-//                 return reject(err);
-//             }
-//             console.log('The file was saved!')
-//             resolve()
-//         })
-//     })
-// }

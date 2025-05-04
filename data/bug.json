@@ -1,10 +1,10 @@
 [
   {
-    "_id": "MvGA0",
-    "title": "Bug 1746372990050",
-    "description": "Bug description",
-    "severity": 3,
-    "createdAt": 1746372993670
+    "title": "bug 01111",
+    "description": "test from postman",
+    "severity": 5,
+    "_id": "iHPco",
+    "createdAt": 1746380198900
   },
   {
     "_id": "nB0zw",
@@ -12,6 +12,13 @@
     "description": "I'm am a description",
     "severity": 5,
     "createdAt": 1742489454167
+  },
+  {
+    "_id": "sTpWV",
+    "title": "bug 02",
+    "description": "I'm am a description",
+    "severity": 3,
+    "createdAt": 1742489403172
   },
   {
     "_id": "abcd",

@@ -3,6 +3,7 @@ import fs from 'fs'
 import { utilService } from './util.service.js'
 import { loggerService } from './logger.service.js'
 
+const PAGE_SIZE = 2
 
 const bugs = utilService.readJsonFile('data/bug.json')
 
@@ -28,6 +29,10 @@ function query(filterBy={}) {
         if (filterBy.labels && filterBy.labels.length) {
             filteredBugs = filteredBugs.filter(bug => {
                 return bug.labels.some(label => filterBy.labels.includes(label))})
+        }
+        if (filterBy.pageIdx !== undefined) {
+            const startIdx = filterBy.pageIdx * PAGE_SIZE
+            filteredBugs = filteredBugs.slice(startIdx, startIdx + PAGE_SIZE)
         }
  
     return Promise.resolve(filteredBugs)

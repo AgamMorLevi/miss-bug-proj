@@ -16,7 +16,10 @@ app.use(express.json()) // for parsing json
 //express routing
 //bug list
 app.get('/api/bug', (req, res) => {
-   bugService.query()
+    const  filterBy = {
+        txt: req.query.txt 
+    }
+   bugService.query(filterBy)
    .then(bugs => res.send(bugs))
    .catch(err => {
     loggerService.error('Cannot get bugs', err)

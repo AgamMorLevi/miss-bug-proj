@@ -35,8 +35,13 @@ function save(bug) {
         const idx = bugs.findIndex(currBug => currBug._id === bug._id)
         bugs[idx] = { ...bugs[idx], ...bug }
     } else {
-        bug._id = utilService.makeId()
-        bug.createdAt = Date.now()
+        bug = {
+            title: bug.title,
+            severity: bug.severity,
+            description: bug.description,
+            createdAt: Date.now(),
+            _id: utilService.makeId()
+        }
         bugs.unshift(bug)
     }
     return _saveBugsToFile().then(() => bug)
@@ -52,7 +57,7 @@ function _saveBugsToFile() {
             }
             console.log('The file was saved!')
             resolve()
-        });
+        })
     })
 }
 

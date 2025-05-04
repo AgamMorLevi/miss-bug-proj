@@ -44,12 +44,24 @@ function remove(bugId) {
 }
 
 function save(bug) {
-    var queryparse = `title=${bug.title}&description=${bug.description}&severity=${bug.severity}`
-    const url = BASE_URL + 'save?' + queryparse
-    if (bug._id)  queryparse += `&_id=${bug._id}`
-    return axios.get(url + queryparse)
-    .then(res => res.data)
 
+    if (bug._id) {
+        return axios.put(BASE_URL + bug._id , bug)
+        .then(res => res.data)
+        .catch(err => {
+            console.log('Error updating bug:', err)
+            throw err
+        })
+
+    } else {
+        return axios.post(BASE_URL, bug)
+        .then(res => res.data)
+        .catch(err => {
+            console.log('Error creating bug:', err)
+            throw err
+        })
+        
+    }
 }
 
 

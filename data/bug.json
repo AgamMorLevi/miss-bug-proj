@@ -1,12 +1,5 @@
 [
   {
-    "title": "bug 01111",
-    "description": "test from postman",
-    "severity": 5,
-    "_id": "iHPco",
-    "createdAt": 1746380198900
-  },
-  {
     "_id": "nB0zw",
     "title": "bug 01",
     "description": "I'm am a description",

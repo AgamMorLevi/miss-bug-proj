@@ -40,7 +40,7 @@ app.post('/api/bug', (req, res) => {
 
 
 //PUT - update bug
-app.get('/api/bug/:bugId', (req, res) => {
+app.put('/api/bug/:bugId', (req, res) => {
 
     const bugToSave = req.body
 
@@ -51,7 +51,6 @@ app.get('/api/bug/:bugId', (req, res) => {
         res.status(400).send('Cannot update bug')
     })
 })
-
 
 
 

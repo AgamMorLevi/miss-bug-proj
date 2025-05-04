@@ -36,8 +36,6 @@ function getById(bugId) {
 }
 
 function remove(bugId) {
-    // const url = BASE_URL + bugId +'/remove'
-    // return axios.get(url)
 
     return axios.delete(BASE_URL + bugId)
     .then(res => res.data)

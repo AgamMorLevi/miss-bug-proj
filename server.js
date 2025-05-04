@@ -17,7 +17,8 @@ app.use(express.json()) // for parsing json
 //bug list
 app.get('/api/bug', (req, res) => {
     const  filterBy = {
-        txt: req.query.txt 
+        txt: req.query.txt ,
+        minSeverity : req.query.minSeverity || 0
     }
    bugService.query(filterBy)
    .then(bugs => res.send(bugs))

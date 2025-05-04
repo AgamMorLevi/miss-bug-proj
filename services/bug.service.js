@@ -8,6 +8,8 @@ export const bugService = {
     getById,
     remove,
     save
+    // _makeId,
+    // _saveBugsToFile,
 }
 
 const bugs = utilService.readJsonFile('data/bug.json')
@@ -57,29 +59,29 @@ function _saveBugsToFile() {
     })
 }
 
-//DONE: rendom id
+// //DONE: rendom id
 
-function _makeId(langth = 6) {
-    var id = ''
-    var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
-    for (var i = 0; i < langth; i++) {
-        id += possible.charAt(Math.floor(Math.random() * possible.length))
-    }
-    return id
+// function _makeId(langth = 6) {
+//     var id = ''
+//     var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+//     for (var i = 0; i < langth; i++) {
+//         id += possible.charAt(Math.floor(Math.random() * possible.length))
+//     }
+//     return id
 
-}
+// }
 
-//DONE: save bug to file
-function _saveBugsToFile() {
-    return new Promise((resolve, reject) => {
-        const data = JSON.stringify(bugs, null, 2)
-        fs.writeFile('data/bug.json', data, (err) => {
-            if (err) {
-                loggerService.error('Cannot write to bugs file', err)
-                return reject(err);
-            }
-            console.log('The file was saved!')
-            resolve()
-        })
-    })
-}
+// //DONE: save bug to file
+// function _saveBugsToFile() {
+//     return new Promise((resolve, reject) => {
+//         const data = JSON.stringify(bugs, null, 2)
+//         fs.writeFile('data/bug.json', data, (err) => {
+//             if (err) {
+//                 loggerService.error('Cannot write to bugs file', err)
+//                 return reject(err);
+//             }
+//             console.log('The file was saved!')
+//             resolve()
+//         })
+//     })
+// }

@@ -54,18 +54,11 @@ function getDefaultFilter() {
     return { txt: '', minSeverity: 0 }
 }
 
-
 function downloadPDF() {
-    fetch('/api/bug/pdf')  
-        .then(response => response.blob())  
-        .then(blob => {
-            const url = window.URL.createObjectURL(blob)
-            const link = document.createElement('a')
-            link.href = url;
-            link.download = 'bugs.pdf'
-            document.body.appendChild(link)
-            link.click()
-            document.body.removeChild(link)
-        })
-        .catch(err => console.error('Error downloading PDF:', err))
-  }
+    const doc = new jsPDF()
+
+    doc.text('Bug List', 10, 10)
+    doc.text('Example bug content...', 10, 20)
+
+    doc.save('bugs.pdf')
+}

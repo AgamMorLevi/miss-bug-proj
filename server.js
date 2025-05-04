@@ -4,6 +4,7 @@ import cookieParser from 'cookie-parser'
 
 import { bugService } from './services/bug.service.js'
 import { loggerService } from './services/logger.service.js' 
+import { pdfService } from './services/pdf.service.js'
 
 const app = express() 
 
@@ -21,10 +22,10 @@ app.get('/puki', (req, res) => {
 app.get('/nono', (req, res) => res.redirect('/'))
 
 
-
-//DONE: Provide an API for Bugs CRUDL: Implement one by one along with a bugService
-//DONE: List of bugs
 // Bug API: GET /api/bug
+//Provide an API for Bugs CRUDL: Implement one by one along with a bugService
+
+//DONE: List of bugs
 //* Read
 app.get('/api/bug', (req, res) => {
    bugService.query()
@@ -37,7 +38,7 @@ app.get('/api/bug', (req, res) => {
 }) 
 
 //DOME: Set Defult value
-//Save
+//Save new bug
 app.get('/api/bug/save', (req, res) => {
 
     loggerService.debug('req.query', req.query)
@@ -60,7 +61,7 @@ app.get('/api/bug/save', (req, res) => {
 })
 
 //DONE:refactor Err
-//READ :get by id
+//READ :get by id 
 app.get('/api/bug/:bugId', (req, res) => {
     const { bugId } = req.params
     const { visitCountMap =[] } = req.cookies
@@ -78,6 +79,7 @@ app.get('/api/bug/:bugId', (req, res) => {
 
 }) 
 
+//DONE:remove bug
 app.get('/api/bug/:bugId/remove', (req, res) => {
     const { bugId } = req.params
     bugService.remove(bugId)

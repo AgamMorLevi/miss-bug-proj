@@ -6,7 +6,7 @@
     "description": "I'm am a description",
     "severity": 5,
     "createdAt": 1742489454167,
-    "labels" :" ['critical', 'need-CR', 'dev-branch']"
+    "labels" : ["need-CR", "dev-branch"]
 
   },
   {
@@ -15,7 +15,7 @@
     "description": "I'm am a description",
     "severity": 3,
     "createdAt": 1742489403172,
-    "labels" :" ['critical', 'need-CR', 'dev-branch']"
+    "labels" :["critical"]
 
   },
   {
@@ -24,7 +24,7 @@
     "description": "problem when clicking Save",
     "severity": 2,
     "createdAt": 1742489403172,
-    "labels" :" ['critical', 'need-CR', 'dev-branch']"
+    "labels" : ["critical","dev-branch"]
 
   },
   {
@@ -33,7 +33,7 @@
     "description": "baba",
     "severity": 5,
     "createdAt": 1694117290488,
-    "labels" :" ['critical', 'need-CR', 'dev-branch']"
+    "labels" :["dev-branch"]
 
   },
   {
@@ -42,7 +42,7 @@
     "description": "shanbi",
     "severity": 2,
     "createdAt": 1694117417145,
-     "labels" :" ['critical', 'need-CR', 'dev-branch']"
+     "labels" : ["critical", "need-CR", "dev-branch"]
   }
 ]
 

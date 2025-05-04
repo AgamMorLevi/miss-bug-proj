@@ -11,7 +11,7 @@ app.use(express.static('public'))
 app.use(cookieParser())
 
 // Basic - Routing in express
-app.get('/', (req, res) => res.send('Hello Muki'))
+app.get('/', (req, res) => res.send('bug app'))
 app.get('/puki', (req, res) => {
     var visitCount = req.cookies.visitCount || 0
     visitCount++
@@ -24,6 +24,7 @@ app.get('/nono', (req, res) => res.redirect('/'))
 
 //DONE: Provide an API for Bugs CRUDL: Implement one by one along with a bugService
 //DONE: List of bugs
+// Bug API: GET /api/bug
 //* Read
 app.get('/api/bug', (req, res) => {
    bugService.query()

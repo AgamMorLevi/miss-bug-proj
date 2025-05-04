@@ -44,7 +44,7 @@ function save(bug) {
     var queryparse = `title=${bug.title}&description=${bug.description}&severity=${bug.severity}`
     const url = BASE_URL + 'save?' + queryparse
     if (bug._id)  queryparse += `&_id=${bug._id}`
-    return axios.get(url)
+    return axios.get(url + queryparse)
     .then(res => res.data)
 
 }

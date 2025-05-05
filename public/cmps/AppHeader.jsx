@@ -8,18 +8,18 @@ import { showErrorMsg } from '../services/event-bus.service.js'
 
 
 export function AppHeader() {
-    const navigate = useNavigate()
-    const [user , setUser] = useState(userService.getLoggedinUser())
+    // const navigate = useNavigate()
+    // const [user , setUser] = useState(userService.getLoggedinUser())
 
-    function onLogout() {
-        userService.logout()
-            .then(() => onSetUser(null))
-            .catch(err => showErrorMsg('Could not log out, please try again later'))
-    }
+    // function onLogout() {
+    //     userService.logout()
+    //         .then(() => onSetUser(null))
+    //         .catch(err => showErrorMsg('Could not log out, please try again later'))
+    // }
 
-    function onSetUser(user) {
-        setUser(user)
-    }
+    // function onSetUser(user) {
+    //     setUser(user)
+    // }
 
  
     return (
@@ -32,7 +32,7 @@ export function AppHeader() {
             <NavLink to="/about">About</NavLink>      
         </nav>
         </section>
-
+{/* 
         {user ? (
             <section className="user-container flex align-center">
                 <Link to={`/user/${user._id}`}>Welcome {user.fullName}</Link>
@@ -44,7 +44,7 @@ export function AppHeader() {
                 
             </section>
         )}
-        <UserMsg/>
+        <UserMsg/> */}
     </header>
 )
 }

@@ -1,6 +1,6 @@
 import { storageService } from './async-storage.service.js'
 
-export const bugService = {
+export const userService = {
     login,
     signup,
     logout,

@@ -3,7 +3,7 @@ const { useState } = React
 const { Link, NavLink } = ReactRouterDOM
 const {useNavigate} = ReactRouterDOM
 
-import{ userService} from '../services/bug.service.local.js'
+import{ userService} from '../services/user.service.local.js'
 import { showErrorMsg } from '../services/event-bus.service.js'
 
 
@@ -15,6 +15,10 @@ export function AppHeader() {
         userService.logout()
             .then(() => onSetUser(null))
             .catch(err => showErrorMsg('Could not log out, please try again later'))
+    }
+
+    function onSetUser(user) {
+        setUser(user)
     }
 
  

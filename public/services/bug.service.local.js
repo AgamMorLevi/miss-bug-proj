@@ -1,62 +1,80 @@
+import { utilService } from './util.service.js'
 import { storageService } from './async-storage.service.js'
 
-// export const bugService = {
-//     query,
-//     getById,
-//     save,
-//     remove,
-//     getDefaultFilter
-// }
+const STORAGE_KEY = 'bugs'
+
+_createBugs()
 
 export const bugService = {
-    login,
-    signup,
-    logout,
-    getLoggedinUser,
-
+    query,
     getById,
-    getEmptyCredential
+    save,
+    remove,
+    getDefaultFilter
 }
 
-const KEY = 'userDB' // local storage key
-const STORAGE_KEY_LOGGEDIN_USER = 'loggedinUser' // session storage key
+function query(filterBy) {
+    return storageService.query(STORAGE_KEY)
+    .then(bugs => {
 
+        if (filterBy.txt) {
+            const regExp = new RegExp(filterBy.txt, 'i')
+            bugs = bugs.filter(bug => regExp.test(bug.title))
+        }
 
-function login({userName, password}) {
-    return storageService.query(KEY) 
-        .then(users => { 
-            const user = users.find(user => user.userName === userName && user.password === password)
-            if (user) return _setLoggedinUser(user) 
-            else return Promise.reject('Invalid login')      
-        })
+        if (filterBy.minSeverity) {
+            bugs = bugs.filter(bug => bug.severity >= filterBy.minSeverity)
+        }
 
+        return bugs
+    })
 }
 
-function signup({userName, password, fullName}) {
-    const user ={userName, password, fullName}
-    return storageService.post(KEY, user) 
-        .then(_setLoggedinUser) 
+function getById(bugId) {
+    return storageService.get(STORAGE_KEY, bugId)
 }
 
-function logout() {
-    sessionStorage.removeItem(STORAGE_KEY_LOGGEDIN_USER) 
-    return Promise.resolve()
+function remove(bugId) {
+    return storageService.remove(STORAGE_KEY, bugId)
 }
 
-function getLoggedinUser() {
-    return JSON.parse(sessionStorage.getItem(STORAGE_KEY_LOGGEDIN_USER)) 
+function save(bug) {
+    if (bug._id) {
+        return storageService.put(STORAGE_KEY, bug)
+    } else {
+        return storageService.post(STORAGE_KEY, bug)
+    }
 }
 
-function getById(userId) {}
+function _createBugs() {
+    let bugs = utilService.loadFromStorage(STORAGE_KEY)
+    if (bugs && bugs.length > 0) return 
 
-function getEmptyCredential() {}
-
-function _setLoggedinUser(user) {
-    const userToSave = {_id: user._id, fullName: user.fullName}
-    sessionStorage.setItem(STORAGE_KEY_LOGGEDIN_USER, JSON.stringify(userToSave))
-    return userToSave
+    bugs = [
+        {
+            title: "Infinite Loop Detected",
+            severity: 4,
+            _id: "1NF1N1T3"
+        },
+        {
+            title: "Keyboard Not Found",
+            severity: 3,
+            _id: "K3YB0RD"
+        },
+        {
+            title: "404 Coffee Not Found",
+            severity: 2,
+            _id: "C0FF33"
+        },
+        {
+            title: "Unexpected Response",
+            severity: 1,
+            _id: "G0053"
+        }
+    ]
+    utilService.saveToStorage(STORAGE_KEY, bugs)
 }
 
-
-
-
+function getDefaultFilter() {
+    return { txt: '', minSeverity: 0 }
+}

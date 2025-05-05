@@ -18,16 +18,6 @@
     ]
   },
   {
-    "_id": "sTpWV",
-    "title": "bug 02",
-    "description": "I'm am a description",
-    "severity": 3,
-    "createdAt": 1742489403172,
-    "labels": [
-      "critical"
-    ]
-  },
-  {
     "_id": "abcd",
     "title": "bug 03",
     "description": "problem when clicking Save",
@@ -45,18 +35,6 @@
     "severity": 5,
     "createdAt": 1694117290488,
     "labels": [
-      "dev-branch"
-    ]
-  },
-  {
-    "_id": "RJBVn",
-    "title": "bug 05",
-    "description": "shanbi",
-    "severity": 2,
-    "createdAt": 1694117417145,
-    "labels": [
-      "critical",
-      "need-CR",
       "dev-branch"
     ]
   }

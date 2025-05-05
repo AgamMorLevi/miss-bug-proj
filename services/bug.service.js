@@ -3,44 +3,58 @@ import fs from 'fs'
 import { utilService } from './util.service.js'
 import { loggerService } from './logger.service.js'
 
-const PAGE_SIZE = 2
-
-const bugs = utilService.readJsonFile('data/bug.json')
-
 export const bugService = {
     query,
     getById,
     remove,
     save
-
 }
 
+const bugs = utilService.readJsonFile('data/bug.json')
 
-function query(filterBy={}) {
-    var filteredBugs = bugs
-    
-        if (filterBy.txt) {
-            const regExp = new RegExp(filterBy.txt, 'i')
-            filteredBugs = filteredBugs.filter(bug => regExp.test(bug.title))
-        }
-        if (filterBy.minSeverity) {
-            filteredBugs = filteredBugs.filter(bug => bug.severity >= filterBy.minSeverity)  
-        }
-        if (filterBy.labels && filterBy.labels.length) {
-            filteredBugs = filteredBugs.filter(bug => {
-                return bug.labels.some(label => filterBy.labels.includes(label))})
-        }
-        if (filterBy.pageIdx !== undefined) {
-            const startIdx = filterBy.pageIdx * PAGE_SIZE
-            filteredBugs = filteredBugs.slice(startIdx, startIdx + PAGE_SIZE)
-        }
- 
-    return Promise.resolve(filteredBugs)
+function query(queryOptions) {
+    const { filterBy, sortBy, pagination } = queryOptions
+    var bugsToReturn = [ ...bugs ]
+
+    if (filterBy.txt) {
+        const regExp = new RegExp(filterBy.txt, 'i')
+        bugsToReturn = 
+            bugsToReturn.filter(bug => regExp.test(bug.title))
+    }
+
+    if (filterBy.minSeverity) {
+        bugsToReturn = 
+            bugsToReturn.filter(bug => bug.severity >= filterBy.minSeverity)
+    }
+
+    if (filterBy.labels && filterBy.labels.length > 0) {
+        bugsToReturn = 
+            bugsToReturn.filter(bug => 
+                filterBy.labels.some(label => bug?.labels?.includes(label)))
+    }
+
+    if (sortBy.sortField === 'severity' || sortBy.sortField === 'createdAt') {
+        const { sortField } = sortBy
+
+        bugsToReturn.sort((bug1, bug2) => 
+            (bug1[sortField] - bug2[sortField]) * sortBy.sortDir)
+    } else if (sortBy.sortField === 'title') {
+        bugsToReturn.sort((bug1, bug2) => 
+            (bug1.title.localeCompare(bug2.title)) * sortBy.sortDir)
+    } 
+
+    if (pagination.pageIdx !== undefined) {
+        const { pageIdx, pageSize} = pagination
+        
+        const startIdx = pageIdx * pageSize
+        bugsToReturn = bugsToReturn.slice(startIdx, startIdx + pageSize)
+    }
+
+    return Promise.resolve(bugsToReturn)
 }
 
 function getById(bugId) {
     const bug = bugs.find(bug => bug._id === bugId)
-    // pdfService.buildBugsPDF(bugs) //pdf bonus
     if (!bug) return Promise.reject('Bug not found!')
     return Promise.resolve(bug)
 }
@@ -56,13 +70,8 @@ function save(bug) {
         const idx = bugs.findIndex(currBug => currBug._id === bug._id)
         bugs[idx] = { ...bugs[idx], ...bug }
     } else {
-        bug = {
-            title: bug.title,
-            severity: bug.severity,
-            description: bug.description,
-            createdAt: Date.now(),
-            _id: utilService.makeId()
-        }
+        bug._id = utilService.makeId()
+        bug.createdAt = Date.now()
         bugs.unshift(bug)
     }
     return _saveBugsToFile().then(() => bug)
@@ -78,7 +87,7 @@ function _saveBugsToFile() {
             }
             console.log('The file was saved!')
             resolve()
-        })
+        });
     })
 }
 

@@ -1,6 +1,3 @@
-import { jsPDF } from 'jspdf'           
-import { page } from 'pdfkit'
-
 const BASE_URL = '/api/bug/'
 
 export const bugService = {
@@ -9,70 +6,45 @@ export const bugService = {
     save,
     remove,
     getDefaultFilter,
-    downloadPDF
-
+    getLabels,
 }
 
-function query(filterBy={}) {
-    return axios.get(BASE_URL,{ params: filterBy })
-    .then (res => res.data)
-    .then(bugs => {
-
-        if (filterBy.txt) {
-            const regExp = new RegExp(filterBy.txt, 'i')
-            bugs = bugs.filter(bug => regExp.test(bug.title))
-        }
-
-        if (filterBy.minSeverity) {
-            bugs = bugs.filter(bug => bug.severity >= filterBy.minSeverity)
-        }
-
-        return bugs
-    })
+function query(queryOptions) {
+    return axios.get(BASE_URL, { params: queryOptions })
+        .then(res => res.data)
 }
 
 function getById(bugId) {
-    return axios.get( BASE_URL + bugId)
-    .then(res => res.data)  
+    return axios.get(BASE_URL + bugId)
+        .then(res => res.data)
 }
 
 function remove(bugId) {
-
     return axios.delete(BASE_URL + bugId)
-    .then(res => res.data)
 }
 
 function save(bug) {
+    const method = bug._id ? 'put' : 'post'
+    const bugId = bug._id || ''
 
-    if (bug._id) {
-        return axios.put(BASE_URL + bug._id , bug)
+    return axios[method](BASE_URL + bugId, bug)
         .then(res => res.data)
-        .catch(err => {
-            console.log('Error updating bug:', err)
-            throw err
-        })
-
-    } else {
-        return axios.post(BASE_URL, bug)
-        .then(res => res.data)
-        .catch(err => {
-            console.log('Error creating bug:', err)
-            throw err
-        })
         
-    }
+    // if (bug._id) {
+    //     return axios.put(BASE_URL + bug._id, bug)
+    //         .then(res => res.data)
+    // } else {
+    //     return axios.post(BASE_URL, bug)
+    //         .then(res => res.data)
+    // }
 }
-
 
 function getDefaultFilter() {
-    return { txt: '', minSeverity: 0 , pageIdx: 0 }
+    return { txt: '', minSeverity: 0, labels: [], sortField: '', sortDir: 1 }
 }
 
-function downloadPDF() {
-    const doc = new jsPDF()
-
-    doc.text('Bug List', 10, 10)
-    doc.text('Example bug content...', 10, 20)
-
-    doc.save('bugs.pdf')
+function getLabels() {
+    return [
+        'back', 'front', 'critical', 'fixed', 'in progress', 'stuck'
+    ]
 }

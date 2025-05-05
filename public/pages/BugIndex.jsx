@@ -1,5 +1,4 @@
 const { useState, useEffect } = React
-const PAGE_SIZE =2
 
 import { bugService } from '../services/bug.service.remote.js'
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service.js'
@@ -33,7 +32,7 @@ export function BugIndex() {
         const bug = {
             title: prompt('Bug title?', 'Bug ' + Date.now()),
             severity: +prompt('Bug severity?', 3),
-            description: prompt('Bug description?', 'Add description')
+            description: `I'm am a description`
         }
 
         bugService.save(bug)
@@ -63,32 +62,17 @@ export function BugIndex() {
         setFilterBy(prevFilter => ({ ...prevFilter, ...filterBy }))
     }
 
-    function onChangePage(diff) {
-        setFilterBy(prevFilter => {
-            const newPageIdx = Math.max(0, prevFilter.pageIdx + diff)
-            return { ...prevFilter, pageIdx: newPageIdx }
-        })
-    }
-    if (!bugs) return <div>Loading...</div>
     return <section className="bug-index main-content">
         
         <BugFilter filterBy={filterBy} onSetFilterBy={onSetFilterBy} />
         <header>
             <h3>Bug List</h3>
             <button onClick={onAddBug}>Add Bug</button>
-            <button onClick={() => bugService.downloadPDF}>Download PDF</button>
-
-
         </header>
         
         <BugList 
             bugs={bugs} 
             onRemoveBug={onRemoveBug} 
-            onEditBug={onEditBug}
-        />
-
-    <button disabled={filterBy.pageIdx === 0} onClick={() => onChangePage(-1)}>Prev</button>
-    <button disabled={bugs.length < PAGE_SIZE} onClick={() => onChangePage(1)}>Next</button>
-
+            onEditBug={onEditBug} />
     </section>
 }

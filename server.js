@@ -3,32 +3,46 @@ import cookieParser from 'cookie-parser'
 
 import { bugService } from './services/bug.service.js'
 import { loggerService } from './services/logger.service.js' 
-import { pdfService } from './services/pdf.service.js'
 
 const app = express() 
 
 //Express config
 app.use(express.static('public'))
 app.use(cookieParser())
-app.use(express.json()) // for parsing json
+app.use(express.json()) 
 
 
 //express routing
 //bug list
 app.get('/api/bug', (req, res) => {
-    const  filterBy = {
-        txt: req.query.txt ,
-        minSeverity : req.query.minSeverity || 0 ,
-        labels: req.query.labels || null , 
-        pageIdx: +req.query.pageIdx || 0
+    const queryOptions = parseQueryParams(req.query)
 
-    }
-   bugService.query(filterBy)
+   bugService.query(queryOptions)
    .then(bugs => res.send(bugs))
    .catch(err => {
     loggerService.error('Cannot get bugs', err)
     res.status(400).send('Cannot load bugs')
 })
+
+function parseQueryParams(queryParams) {
+    const filterBy = {
+        txt: queryParams.txt || '',
+        minSeverity: +queryParams.minSeverity || 0,
+        labels: queryParams.labels || [],
+    }
+
+    const sortBy = {
+        sortField: queryParams.sortField || '',
+        sortDir: +queryParams.sortDir || 1,
+    }
+    
+    const pagination = {
+        pageIdx: queryParams.pageIdx !== undefined ? +queryParams.pageIdx || 0 : queryParams.pageIdx,
+        pageSize: +queryParams.pageSize || 3,
+    }
+
+    return { filterBy, sortBy, pagination }
+}
 
 }) 
 
@@ -84,6 +98,7 @@ app.get('/api/bug/:bugId', (req, res) => {
 //remove
 app.delete('/api/bug/:bugId', (req, res) => {
     const { bugId } = req.params
+
     bugService.remove(bugId)
         .then(() => res.send(bugId + ' bug Removed'))
         .catch(err => {
@@ -93,24 +108,6 @@ app.delete('/api/bug/:bugId', (req, res) => {
 
 
 }) 
-
-// //TODO:Make the option for PDF
-// app.get('/api/bug/pdf', (req, res) => {
-//     bugService.query() // Query the bugs from the database or file
-//         .then(bugs => {
-//             pdfService.buildBugsPDF(bugs, res); // Generate and send PDF to client
-//         })
-//         .catch(err => {
-//             loggerService.error('Cannot generate PDF', err)
-//             res.status(500).send('Cannot create PDF')
-//         })
-// })
-
 const port = 3030
-app.listen(port, () =>
-    loggerService.info(`Server listening on port http://127.0.0.1:${port}/`)
-)
-
-
-//BONUS:logger request
+app.listen(port, () => loggerService.info(`Server listening on port http://127.0.0.1:${port}/`))
 

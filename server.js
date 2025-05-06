@@ -138,7 +138,7 @@ app.get('/api/user/:userId', (req, res) => {
 
 
 // Aunt API
-app.post('/api/auth/signup', (res, req) => {
+app.post('/api/auth/signup', (req, res) => {
     const credential = req.body
 
     userService.save(credential)

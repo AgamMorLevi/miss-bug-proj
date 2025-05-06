@@ -1,61 +1,55 @@
 import { storageService } from './async-storage.service.js'
 
 export const userService = {
-    login,
-    signup,
-    logout,
-    getLoggedinUser,
-
-    getById,
-    getEmptyCredential
+  get,
+  login,
+  signup,
+  logout,
+  getLoggedInUser,
+  getEmptyCredentials,
 }
 
-const KEY = 'userDB' // local storage key
-const STORAGE_KEY_LOGGEDIN_USER = 'loggedinUser' // session storage key
+const KEY = 'userDB'
+const STORAGE_KEY_LOGGEDIN_USER = 'loggedInUser'
 
-
-function login({userName, password}) {
-    return storageService.query(KEY) 
-        .then(users => { 
-            const user = users.find(user => user.userName === userName && user.password === password)
-            if (user) return _setLoggedinUser(user) 
-            else return Promise.reject('Invalid login')      
-        })
-
+function get(userId) {
+  return storageService.get(KEY, userId)
 }
 
-function signup({userName, password, fullName}) {
-    const user ={userName, password, fullName}
-    return storageService.post(KEY, user) 
-        .then(_setLoggedinUser) 
+function getLoggedInUser() {
+  return JSON.parse(sessionStorage.getItem(STORAGE_KEY_LOGGEDIN_USER))
+}
+
+function login({ username, password }) {
+  return storageService.query(KEY).then(users => {
+    const user = users.find(
+      user => user.username === username && user.password === password
+    )
+    if (user) return _setLoggedinUser(user)
+    else return Promise.reject('Invalid login')
+  })
+}
+
+function signup({ username, password, fullname }) {
+  const user = { username, password, fullname }
+  return storageService.post(KEY, user).then(_setLoggedinUser)
 }
 
 function logout() {
-    sessionStorage.removeItem(STORAGE_KEY_LOGGEDIN_USER) 
-    return Promise.resolve()
-}
-
-function getLoggedinUser() {
-    return JSON.parse(sessionStorage.getItem(STORAGE_KEY_LOGGEDIN_USER)) 
-}
-function getById(userId) {
-    return storageService.get(STORAGE_KEY_LOGGEDIN_USER, userId)
-}
-
-function getEmptyCredential() {
-    return {
-        userName: '',
-        password: '',
-        fullName: ''
-    }
+  sessionStorage.removeItem(STORAGE_KEY_LOGGEDIN_USER)
+  return Promise.resolve()
 }
 
 function _setLoggedinUser(user) {
-    const userToSave = {_id: user._id, fullName: user.fullName}
-    sessionStorage.setItem(STORAGE_KEY_LOGGEDIN_USER, JSON.stringify(userToSave))
-    return userToSave
+  const userToSave = { _id: user._id, fullname: user.fullname }
+  sessionStorage.setItem(STORAGE_KEY_LOGGEDIN_USER, JSON.stringify(userToSave))
+  return userToSave
 }
 
-
-
-
+function getEmptyCredentials() {
+  return {
+    username: '',
+    password: '',
+    fullname: '',
+  }
+}

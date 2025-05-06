@@ -1,4 +1,4 @@
-const BASE_URL = '/api/bug/'
+const BASE_URL = `/api/bug/`
 
 export const bugService = {
     query,
@@ -6,17 +6,17 @@ export const bugService = {
     save,
     remove,
     getDefaultFilter,
-    getLabels,
+    downloadBudsPdf,
+    getEmptyBug
 }
 
-function query(queryOptions) {
-    return axios.get(BASE_URL, { params: queryOptions })
-        .then(res => res.data)
+function query(filterBy, sortBy) {
+    const filterSortBy = { ...filterBy, ...sortBy }
+    return axios.get(BASE_URL, { params: filterSortBy }).then(res => res.data)
 }
 
 function getById(bugId) {
-    return axios.get(BASE_URL + bugId)
-        .then(res => res.data)
+    return axios.get(BASE_URL + bugId).then(res => res.data)
 }
 
 function remove(bugId) {
@@ -25,26 +25,18 @@ function remove(bugId) {
 
 function save(bug) {
     const method = bug._id ? 'put' : 'post'
-    const bugId = bug._id || ''
-
-    return axios[method](BASE_URL + bugId, bug)
-        .then(res => res.data)
-        
-    // if (bug._id) {
-    //     return axios.put(BASE_URL + bug._id, bug)
-    //         .then(res => res.data)
-    // } else {
-    //     return axios.post(BASE_URL, bug)
-    //         .then(res => res.data)
-    // }
+    return axios[method](BASE_URL, bug).then(res => res.data)
 }
 
 function getDefaultFilter() {
-    return { txt: '', minSeverity: 0, labels: [], sortField: '', sortDir: 1 }
+    return { txt: '', severity: '', labels: '', pageIdx: 0 }
 }
 
-function getLabels() {
-    return [
-        'back', 'front', 'critical', 'fixed', 'in progress', 'stuck'
-    ]
+
+function getEmptyBug() {
+    return { title: '', severity: '' }
+}
+
+function downloadBudsPdf() {
+    return axios.get(BASE_URL + 'pdf').then(res => res.data)
 }

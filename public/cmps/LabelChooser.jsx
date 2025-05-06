@@ -1,30 +1,35 @@
 const { useState, useEffect } = React
 
-export function LabelChooser({ labels, filterBy, onSetFilterBy }) {
-    const labelMap = {}
-    labels.forEach(label => labelMap[label] = false)
-
-    const [ selectedLabels, setSelectedLabels ] = useState(labelMap)
+export function LabelChooser({ labels, onLabelChange }) {
+    const [selectedLabels, setSelectedLabels] = useState([])
 
     useEffect(() => {
-        onSetFilterBy({ ...filterBy, 
-            labels: Object.keys(selectedLabels)
-                .filter(label => selectedLabels[label]) })
+        onLabelChange(selectedLabels)
     }, [selectedLabels])
 
-    function handleChange({ target }) {
-        const { name, checked } = target
-        setSelectedLabels(prev => ({ ...prev, [name]: checked }))
+    function handleLabelChange(event) {
+        const label = event.target.value
+        if (event.target.checked) {
+            setSelectedLabels(prevLabels => [...prevLabels, label])
+        } else {
+            setSelectedLabels(prevLabels => prevLabels.filter(l => l !== label))
+        }
     }
 
-    return <fieldset className="label-chooser">
-        {labels.map(label => 
-            <label key={label} className="tag">
-                <input 
-                    onClick={handleChange} 
-                    name={label}
-                    type="checkbox" />
-                <span>{label}</span>
-            </label>)}
-    </fieldset>
+    return (
+        <div className="label-selector">
+            {labels.map(label => (
+                <div key={label}>
+                    <input
+                        type="checkbox"
+                        value={label}
+                        checked={selectedLabels.includes(label)}
+                        onChange={handleLabelChange}
+                        id={`checkbox-${label}`}
+                    />
+                    <label htmlFor={`checkbox-${label}`}>{label}</label>
+                </div>
+            ))}
+        </div>
+    )
 }

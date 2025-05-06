@@ -1,50 +1,49 @@
 const { useState } = React
 
-const { Link, NavLink } = ReactRouterDOM
-const {useNavigate} = ReactRouterDOM
-
-import{ userService} from '../services/user.service.local.js'
-import { showErrorMsg } from '../services/event-bus.service.js'
-
+const { NavLink, useNavigate } = ReactRouterDOM
+import { userService } from '../services/user.service.remote.js'
+import { LoginSignup } from './LoginSignup.jsx'
+import { UserMsg } from './UserMsg.jsx'
 
 export function AppHeader() {
-    // const navigate = useNavigate()
-    // const [user , setUser] = useState(userService.getLoggedinUser())
+    const [user, setUser] = useState(userService.getLoggedInUser())
+    const navigate = useNavigate()
 
-    // function onLogout() {
-    //     userService.logout()
-    //         .then(() => onSetUser(null))
-    //         .catch(err => showErrorMsg('Could not log out, please try again later'))
-    // }
+    function onLogout() {
+        userService.logout().then(() => {
+            setUser(null)
+            navigate('/')
+        })
+    }
 
-    // function onSetUser(user) {
-    //     setUser(user)
-    // }
-
- 
     return (
-    <header className="app-header main-content single-row">
-        <section className="header-container flex align-center">
-        <h1>Miss Bug</h1>
-        <nav>
-            <NavLink to="/">Home</NavLink>
-            <NavLink to="/bug">Bugs</NavLink>
-            <NavLink to="/about">About</NavLink>      
-        </nav>
-        </section>
-{/* 
-        {user ? (
-            <section className="user-container flex align-center">
-                <Link to={`/user/${user._id}`}>Welcome {user.fullName}</Link>
-                <button onClick={onLogout}>Logout</button>
-            </section>
-        ) : (
-            <section className="user-container flex align-center">
-                <LoginSignup onSetUser={onSetUser} />
-                
-            </section>
-        )}
-        <UserMsg/> */}
-    </header>
-)
+        <React.Fragment>
+            <header className="flex align-center space-between main-layout">
+                <img
+                    onClick={() => navigate('/')}
+                    className="logo"
+                    src="/assets/img/small-logo.png"
+                />
+                {!user && <LoginSignup setUser={setUser} />}
+                {user && (
+                    <div className="nav-bar-container flex space-between">
+                        <nav className="nav-bar">
+                            {/* <NavLink to="/">Home</NavLink> */}
+                            <NavLink to="/bug">Bugs</NavLink>
+                            <NavLink to="/user">Profile</NavLink>
+                            {user.isAdmin && <NavLink to="/admin">Admin</NavLink>}
+                            <NavLink to="/about">About</NavLink>
+                        </nav>
+                        <div>
+                            <p>Hello {user.fullname}</p>
+                            <button className="btn" onClick={onLogout}>
+                                Logout
+                            </button>
+                        </div>
+                    </div>
+                )}
+            </header>
+            <UserMsg />
+        </React.Fragment>
+    )
 }

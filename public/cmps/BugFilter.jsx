@@ -1,136 +1,68 @@
-import { bugService } from "../services/bug.service.remote.js"
+const { useState, useEffect ,useRef } = React
+
+import {debounce }  from '../services/util.service.js'
 import { LabelChooser } from "./LabelChooser.jsx"
 
-const { useState, useEffect } = React
 
-export function BugFilter({ filterBy, onSetFilterBy }) {
+export function BugFilter({ onSetFilter, filterBy }) {
 
     const [filterByToEdit, setFilterByToEdit] = useState(filterBy)
-    const labels = bugService.getLabels()
+    const onSetFilterDebounce = useRef(debounce(onSetFilter, 400)).current
+
+    const labels = ['critical', 'need-CR', 'dev-branch', 'famous', 'high']
+
 
     useEffect(() => {
-        onSetFilterBy(filterByToEdit)
+        onSetFilterDebounce(filterByToEdit)
     }, [filterByToEdit])
-
-    function resetSort() {
-        setFilterByToEdit(prev => ({ ...prev, sortField: '', sortDir: 1 }))
-    }
-
-    function onResetFilter() {
-        setFilterByToEdit(prev => ({ ...prev, txt: '', minSeverity: 0 }))
-    }
 
     function handleChange({ target }) {
         const field = target.name
-        let value = target.value
-
-        switch (target.type) {
-            case 'number':
-            case 'range':
-                value = +value || ''
-                break
-
-            case 'radio':
-                value = target.value
-                break
-            case 'checkbox':
-                value = target.checked
-                break
-
-            default:
-                break
-        }
-
-        setFilterByToEdit(prevFilter => {
-            return ({ ...prevFilter, [field]: value })
-        })
+        const value = target.type === 'number' ? +target.value : target.value
+        setFilterByToEdit(prevFilter => ({
+            ...prevFilter,
+            [field]: value,
+        }))
     }
 
-    function onSubmitFilter(ev) {
-        ev.preventDefault()
-        onSetFilterBy(filterByToEdit)
+    function onLabelChange(selectedLabels) {
+
+        setFilterByToEdit(prevFilter => ({
+            ...prevFilter,
+            labels: selectedLabels,
+        }))
     }
 
-    const { txt, minSeverity } = filterByToEdit
-    return (
-        <section className="bug-filter">
-            <h2>Filter</h2>
-            <form onSubmit={onSubmitFilter}>
-                <div className="filter-by">
-                    <label className="tag" htmlFor="txt">Text: </label>
-                    <input value={txt} onChange={handleChange} type="text" placeholder="By Text" id="txt" name="txt" />
+    const { severity, txt, label } = filterByToEdit
 
-                    <label className="tag" htmlFor="minSeverity">Min Severity: </label>
-                    <input value={minSeverity || ''} onChange={handleChange} type="number" placeholder="By Min Severity" id="minSeverity" name="minSeverity" />
-
-                    <button onClick={onResetFilter}>Clear Filter</button>
-                </div>
-                
-                <div className="sort-by">
-                    <div className="sort-field">
-                        <label className="tag" >
-                            <span>Title</span>
-                            <input
-                                type="radio"
-                                name="sortField"
-                                value="title"
-                                checked={filterByToEdit.sortField === 'title'}
-                                onChange={handleChange}
-                            />
-                        </label>
-                        <label className="tag" >
-                            <span>Severity</span>
-                            <input
-                                type="radio"
-                                name="sortField"
-                                value="severity"
-                                checked={filterByToEdit.sortField === 'severity'}            
-                                onChange={handleChange}
-                            />
-                        </label>
-                        <label className="tag" >
-                            <span>Created At</span>
-                            <input
-                                type="radio"
-                                name="sortField"
-                                value="createdAt"
-                                checked={filterByToEdit.sortField === 'createdAt'}                        
-                                onChange={handleChange}
-                            />
-                        </label>
-                    </div>
-
-                    <div className="sort-dir">
-                        <label className="tag" >
-                            <span>Asce</span>
-                            <input
-                                type="radio"
-                                name="sortDir"
-                                value="1"
-                                checked={filterByToEdit.sortDir === "1"}                        
-                                onChange={handleChange}
-                            />
-                        </label>
-                        <label className="tag" >
-                            <span>Desc</span>
-                            <input
-                                type="radio"
-                                name="sortDir"
-                                value="-1"
-                                onChange={handleChange}
-                                checked={filterByToEdit.sortDir === "-1"}                        
-                            />
-                        </label>
-                    </div>
-
-                    <button onClick={resetSort}>Clear Sort</button>
-                </div>
+        return (
+            <form className="bug-filter">
+                <section className='input-container'>
+                    <h3>Filter Bugs</h3>
+    
+                    <input
+                        className="filter-input"
+                        type="text"
+                        id="txt"
+                        name="txt"
+                        value={txt}
+                        placeholder="Enter text here..."
+                        onChange={handleChange}
+                    />
+                    <input
+                        placeholder="Enter severity here.."
+                        className="filter-input"
+                        type="text"
+                        id="severity"
+                        name="severity"
+                        value={severity}
+                        onChange={handleChange}
+                    />
+                </section>
 
                 <LabelChooser 
-                    labels={labels} 
-                    filterBy={filterByToEdit} 
-                    onSetFilterBy={setFilterByToEdit}/>
+                    labels={labels}  onLabelChange={onLabelChange}/>
             </form>
-        </section>
+
     )
 }

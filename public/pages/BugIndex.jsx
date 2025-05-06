@@ -73,7 +73,7 @@ export function BugIndex() {
             <Link to="/bug/edit" className="btn">
                 Add Bug ⛐
             </Link>
-            <button className="btn-download" onClick={onDownloadBudsPdf}>
+            <button className="btn btn-download" onClick={onDownloadBudsPdf}>
                 Download PDF
             </button>
 

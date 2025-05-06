@@ -137,5 +137,12 @@
     "username": "agam",
     "password": "jjj",
     "isAdmin": false
+  },
+  {
+    "_id": "iTwKy",
+    "fullname": "agam mor",
+    "username": "agam",
+    "password": "1234",
+    "isAdmin": false
   }
 ]

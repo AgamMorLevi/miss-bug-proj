@@ -1,71 +1,78 @@
 [
-    {
-        "username": "aaa",
-        "password": "aaa",
-        "fullname": "AA aa",
-        "_id": "r44h"
-    },
-    {
-        "username": "bbb",
-        "password": "bbb",
-        "fullname": "BB bb",
-        "_id": "htg5h"
-    },
-    {
-        "username": "ccc",
-        "password": "ccc",
-        "fullname": "CC cc",
-        "_id": "rfghj"
-    },
-    {
-        "username": "ddd",
-        "password": "ddd",
-        "fullname": "DD dd",
-        "_id": "rtecb"
-    },
-    {
-        "username": "eee",
-        "password": "eee",
-        "fullname": "EE ee",
-        "_id": "rtyh"
-    }
-    ,
-    {
-        "username": "fff",
-        "password": "fff",
-        "fullname": "FF ff",
-        "_id": "stgge4"
-    },   
-    
-    {
-        "username": "bb",
-        "password": "bb",
-        "fullname": "bb",
-        "_id": "nB0zw"
-    },
-    {
-        "username": "cc",
-        "password": "cc",
-        "fullname": "cc",
-        "_id": "sTpWV"
-    },
-    {
-        "username": "dd",
-        "password": "dd",
-        "fullname": "dd",
-        "_id": "abcd"
-    },
-    {
-        "username": "ee",
-        "password": "ee",
-        "fullname": "ee",
-        "_id": "0Sp23"  
-    },
-    {
-        "username": "ff",
-        "password": "ff",
-        "fullname": "ff",
-        "_id": "RJBVn"
-    }
-       
+  {
+    "username": "aaa",
+    "password": "aaa",
+    "fullname": "AA aa",
+    "_id": "r44h"
+  },
+  {
+    "username": "bbb",
+    "password": "bbb",
+    "fullname": "BB bb",
+    "_id": "htg5h"
+  },
+  {
+    "username": "ccc",
+    "password": "ccc",
+    "fullname": "CC cc",
+    "_id": "rfghj",
+    "isAdmin": false
+  },
+  {
+    "username": "ddd",
+    "password": "ddd",
+    "fullname": "DD dd",
+    "_id": "rtecb",
+    "isAdmin": false
+  },
+  {
+    "username": "eee",
+    "password": "eee",
+    "fullname": "EE ee",
+    "_id": "rtyh",
+    "isAdmin": true
+  },
+  {
+    "username": "fff",
+    "password": "fff",
+    "fullname": "FF ff",
+    "_id": "stgge4"
+  },
+  {
+    "username": "bb",
+    "password": "bb",
+    "fullname": "bb",
+    "_id": "nB0zw"
+  },
+  {
+    "username": "cc",
+    "password": "cc",
+    "fullname": "cc",
+    "_id": "sTpWV"
+  },
+  {
+    "username": "dd",
+    "password": "dd",
+    "fullname": "dd",
+    "_id": "abcd"
+  },
+  {
+    "username": "ee",
+    "password": "ee",
+    "fullname": "ee",
+    "_id": "0Sp23"
+  },
+  {
+    "username": "ff",
+    "password": "ff",
+    "fullname": "ff",
+    "_id": "RJBVn"
+  },
+  {
+    "_id": "yLWaY",
+    "fullname": "agam mor",
+    "username": "agam",
+    "password": "mor",
+    "isAdmin": false
+  }
 ]

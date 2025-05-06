@@ -38,10 +38,7 @@ function remove(userId) {
 }
 
 function add(user) {
-<<<<<<< HEAD
 
-=======
->>>>>>> 137cd37a3ea078db092cde6770035ee8d7b1eeea
     return getByUsername(user.username) // Check if username exists...
         .then(existingUser => {
             if (existingUser) return Promise.reject('Username taken')

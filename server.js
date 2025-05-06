@@ -125,31 +125,19 @@ app.get('/api/user', (req, res) => {
     })
 })  
 
-
-// Auth API
-app.get('/api/auth', (req, res) => {
-    userService.query()
-    .then(users => res.send(users))
-    .catch(err => {
-        loggerService.error('Cannot get users', err)
-        res.status(400).send('Cannot load users')
-    })
-    
-})
-
-//GET - get user by id
-app.get('/api/auth/:userId', (req, res) => {
+app.get('/api/user/:userId', (req, res) => {
     const { userId } = req.params
 
     userService.getById(userId)
         .then(user => res.send(user))
         .catch(err => {
-            loggerService.error('Cannot get user', err)
+            loggerService.error('Cannot load user', err)
             res.status(400).send('Cannot load user')
         })
 })
 
-// /api/auth/signup 
+
+// Aunt API
 app.post('/api/auth/signup', (res, req) => {
     const credential = req.body
 
@@ -166,7 +154,6 @@ app.post('/api/auth/signup', (res, req) => {
     })
 })
 
-// /api/auth/login 
 app.post('/api/auth/login', (req, res) => {
   const credential = req.body
 
@@ -182,7 +169,6 @@ app.post('/api/auth/login', (req, res) => {
     })
 })
 
-// /api/auth/logout 
 app.post('/api/auth/logout', (req, res) => {
     res.clearCookie('loginToken')
     res.send('Logged out')

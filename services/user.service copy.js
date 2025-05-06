@@ -1,15 +1,19 @@
+import Cryptr from 'cryptr'
 import fs from 'fs'
 
 import { utilService } from './util.service.js'
 
+const cryptr = new Cryptr(process.env.SECRET1 || 'secret-puk-1234')
 const users = utilService.readJsonFile('data/user.json')
 
 export const userService = {
+    checkLogin,
     signup,
     query,
     remove,
     getById,
-    getByUsername
+    getLoginToken,
+    validateToken,
 }
 
 function query() {
@@ -21,11 +25,36 @@ function query() {
     return Promise.resolve(usersToReturn)
 }
 
-function signup({ fullname, username, password }) {
-    if (!fullname || !username || !password) {
-        return Promise.reject('Incomplete credentials')
+function getLoginToken(user) {
+    return cryptr.encrypt(JSON.stringify(user))
+}
+
+function validateToken(loginToken) {
+    if (!loginToken) return null
+    const json = cryptr.decrypt(loginToken)
+    const loggedinUser = JSON.parse(json)
+    return loggedinUser
+}
+
+function checkLogin({ username, password }) {
+    let user = users.find(
+        user => user.username === username && user.password === password
+    )
+    if (!user) return Promise.reject('Invalid username or password')
+
+    const { _id, fullname, isAdmin } = user
+    user = {
+        _id,
+        fullname,
+        isAdmin,
     }
-    
+    return Promise.resolve(user)
+}
+
+function signup({ fullname, username, password }) {
+    if (!fullname || !username || !password)
+        return Promise.reject('Incomplete credentials')
+
     const user = {
         _id: utilService.makeId(),
         fullname,
@@ -54,13 +83,6 @@ function remove(userId) {
 function getById(userId) {
     const user = users.find(user => user._id === userId)
     if (!user) return Promise.reject('user not found')
-    return Promise.resolve(user)
-}
-
-
-function getByUsername(username) {
-    // You might want to remove the password validation for dev
-    const user = users.find(user => user.username === username)
     return Promise.resolve(user)
 }
 

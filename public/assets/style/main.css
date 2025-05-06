@@ -1,19 +1,37 @@
-@import './setup/reset.css';
-@import './setup/vars.css';
-@import './setup/base.css';
-@import './setup/layout.css';
+/* SETUP  */
+@import 'setup/typography.css';
+@import 'setup/vars.css';
 
-@import './cmps/Home.css';
-@import './cmps/AboutUs.css';
-@import './cmps/BugIndex.css';
-@import './cmps/BugDetails.css';
+/* BASE */
+@import 'basic/base.css';
+@import 'basic/layout.css';
+@import 'basic/helpers.css';
+@import 'basic/buttons.css';
+@import 'basic/animations.css';
+@import 'basic/input.css';
+@import 'basic/checkbox.css';
 
-@import './cmps/AppHeader.css';
-@import './cmps/AppFooter.css';
-@import './cmps/UserMsg.css';
+/* CMPS  */
+@import 'cmps/header.css';
+@import 'cmps/cards.css';
+@import 'cmps/nav-bar.css';
+@import 'cmps/bug-filter.css';
+@import 'cmps/label-select.css';
+@import 'cmps/bug-sort.css';
+@import 'cmps/bug-filter.css';
+@import 'cmps/user-msg.css';
+@import 'cmps/footer.css';
+@import 'cmps/bug-edit.css';
 
-@import './cmps/BugList.css';
-@import './cmps/BugFilter.css';
-@import './cmps/LabelChooser.css';
-@import './cmps/tag.css';
-@import './cmps/BugPreview.css';
+@import 'pages/home-page.css';
+
+
+#root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+
+    >main {
+        flex-grow: 1;
+    }
+}

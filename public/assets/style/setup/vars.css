@@ -1,16 +1,24 @@
 :root {
-    --bg1: darkcyan;
-    --bg2: rgb(50, 165, 204);
-    --bg3: darkmagenta;
-    
-    --color1: aliceblue;
-    --color2: lightblue;
-    --color3: gold;
-    --color4: goldenrod;
-    
-    --gray1: #444;
-    --gray2: lightgray;
-    
-    --success: green;
-    --danger: orangered;
+  /* COLORS  */
+  --primary-color: #09d2b0;
+  --primary-light: #f3f0ff;
+
+  --gray1: #212529;
+  --gray2: #2c2a2e;
+  --gray3: #495057;
+  --gray4: #adb5bd;
+  --gray5: #dee2e6;
+  --gray6: #f8f9fa;
+
+  --error: #e03131;
+  --success: #40c057;
+
+  /* SPACING */
+  --spacing-smallest: 0.3rem;
+  --spacing-small: 0.5rem;
+  --spacing-medium: 0.8rem;
+  --spacing-medium2: 1rem;
+  --spacing-medium3: 1.5rem;
+  --spacing-large: 2rem;
+  --spacing-large2: 2.5rem;
 }

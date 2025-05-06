@@ -8,7 +8,10 @@ export const userService = {
     getById,
     getByUsername,
     remove,
-    add,
+    save,
+    add
+
+
 }
 
 function query() {
@@ -37,8 +40,15 @@ function remove(userId) {
     return _saveUsersToFile()
 }
 
-function add(user) {
+function save(user) {
+    const idx = users.findIndex(u => u._id === user._id)
+    if (idx === -1) return Promise.reject('User not found!')
 
+    users[idx] = user
+    return _saveUsersToFile()   
+}
+
+function add(user) {
     return getByUsername(user.username) // Check if username exists...
         .then(existingUser => {
             if (existingUser) return Promise.reject('Username taken')
@@ -67,3 +77,5 @@ function _saveUsersToFile() {
         })
     })
 }
+
+

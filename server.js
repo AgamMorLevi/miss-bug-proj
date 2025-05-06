@@ -1,9 +1,11 @@
 import express from 'express' 
 import cookieParser from 'cookie-parser'
+import path from 'path'
 
 import { bugService } from './services/bug.service.js'
-import { loggerService } from './services/logger.service.js' 
 import { userService } from './services/user.service.js'
+import { loggerService } from './services/logger.service.js' 
+import { authService } from './services/auth.servic.js'
 
 
 const app = express() 
@@ -13,9 +15,9 @@ app.use(express.static('public'))
 app.use(cookieParser())
 app.use(express.json()) 
 
-
 //express routing
-//bug list
+
+// REST API for bugs
 app.get('/api/bug', (req, res) => {
     const queryOptions = parseQueryParams(req.query)
 
@@ -76,7 +78,6 @@ id
 })
 
 
-
 //get by  + visit count
 app.get('/api/bug/:bugId', (req, res) => {
     const { bugId } = req.params
@@ -114,7 +115,18 @@ app.delete('/api/bug/:bugId', (req, res) => {
 const port = 3030
 app.listen(port, () => loggerService.info(`Server listening on port http://127.0.0.1:${port}/`))
 
-//User Api
+//User API
+app.get('/api/user', (req, res) => {
+    userService.query()
+    .then(users => res.send(users))
+    .catch(err => {
+        loggerService.error('Cannot get users', err)
+            res.status(400).send('Cannot load users')
+    })
+})  
+
+
+// Auth API
 app.get('/api/auth', (req, res) => {
     userService.query()
     .then(users => res.send(users))
@@ -137,24 +149,41 @@ app.get('/api/auth/:userId', (req, res) => {
         })
 })
 
-///TODO: api/auth/signup – add a new user to the file 
-//POST - add new user
-app.post('api/auth/signup', (req, res) => {
-    const userToSave = req.body 
-    
-    userService.save(userToSave)
-    .then(savedUser => res.send(savedUser))
-        .catch(err => {
-            loggerService.error('Cannot add user', err)
-            res.status(400).send('Cannot add user')
-        })
+// /api/auth/signup 
+app.post('/api/auth/signup', (res, req) => {
+    const credential = req.body
+
+    userService.save(credential)
+    .then(user=>{
+        if(user){
+            const loginToken = authService.getLoginToken(user)
+            res.cookies('loginToken', loginToken) 
+            res.send(user)
+
+        }else{
+            res.status(400).send('Cannot signup')
+        }
     })
-    
-    
-    // TODO: /api/auth/login – check if username and password are correct - generate a 
-    // loginToken and return a mini-user to the frontend 
-    // ▪ When bug is added – get the creator from the loginToken 
-    // ▪ Only the bug's creator can DELETE/UPDATE a bug 
-    // Update only updatable fields 
-    
-    // o /api/auth/logout – clear the cookie 
+})
+
+// /api/auth/login 
+app.post('/api/auth/login', (req, res) => {
+  const credential = req.body
+
+  authService.checkLogin(credential)
+    .then(user => {
+        if (user) {
+            const loginToken = authService.getLoginToken(user)
+            res.cookie('loginToken', loginToken) 
+            res.send(user)
+        } else {
+            res.status(401).send('Cannot login')
+        }
+    })
+})
+
+// /api/auth/logout 
+app.post('/api/auth/logout', (req, res) => {
+    res.clearCookie('loginToken')
+    res.send('Logged out')
+})

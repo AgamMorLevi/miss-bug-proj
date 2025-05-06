@@ -1,32 +1,31 @@
 [
-  {
-    "title": " 1746391350354",
-    "severity": 3,
-    "description": "Add description",
-    "createdAt": 1746391356321,
-    "_id": "jozSz"
-  },
+
   {
     "_id": "nB0zw",
     "title": "bug 01",
     "description": "I'm am a description",
     "severity": 5,
     "createdAt": 1742489454167,
-    "labels": [
-      "need-CR",
-      "dev-branch"
-    ]
+    "labels" : ["need-CR", "dev-branch"]
+
+  },
+  {
+    "_id": "sTpWV",
+    "title": "bug 02",
+    "description": "I'm am a description",
+    "severity": 3,
+    "createdAt": 1742489403172,
+    "labels" :["critical"]
+
   },
   {
     "_id": "abcd",
     "title": "bug 03",
     "description": "problem when clicking Save",
-    "severity": 11,
+    "severity": 2,
     "createdAt": 1742489403172,
-    "labels": [
-      "critical",
-      "dev-branch"
-    ]
+    "labels" : ["critical","dev-branch"]
+
   },
   {
     "_id": "0Sp23",
@@ -34,8 +33,16 @@
     "description": "baba",
     "severity": 5,
     "createdAt": 1694117290488,
-    "labels": [
-      "dev-branch"
-    ]
+    "labels" :["dev-branch"]
+
+  },
+  {
+    "_id": "RJBVn",
+    "title": "bug 05",
+    "description": "shanbi",
+    "severity": 2,
+    "createdAt": 1694117417145,
+     "labels" : ["critical", "need-CR", "dev-branch"]
   }
 ]
+

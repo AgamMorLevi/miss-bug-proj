@@ -190,8 +190,6 @@ app.post('/api/auth/logout', (req, res) => {
 })
 
 
-
-
 // Fallback route
 // app.get('/**', (req, res) => {
 //     res.sendFile(path.resolve('public/index.html'))
